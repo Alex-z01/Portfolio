@@ -32,6 +32,7 @@ export class AppComponent implements OnInit {
         this.cockroachService.fetchProjects(letter).subscribe(
             (data: Project[]) => {
                 this.allProjects = data;
+                console.log(data);
             },
             (error) => {
                 console.error('Error fetching projects:', error);
@@ -82,8 +83,6 @@ export class AppComponent implements OnInit {
     }
 
     filterByLetter(letter:string) {
-        console.log(`All projects: ${this.allProjects.length}`);
-
         return this.allProjects?.filter(obj => obj.title.toLowerCase().startsWith(letter.toLowerCase()));
     }
 }
