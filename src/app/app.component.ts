@@ -10,6 +10,8 @@ import { CockroachService, Project } from './components/cockroach/cockroach-serv
 export class AppComponent implements OnInit {
     @ViewChild('projectSection') projectSection?: ElementRef;
 
+    functionEndpoint = 'https://main--calm-cat-bdfe20.netlify.app/.netlify/functions/projects';
+
     expanded: boolean = false;
     allProjects: Project[] = [];
     filteredProjects: Project[] = [];
@@ -18,7 +20,6 @@ export class AppComponent implements OnInit {
     constructor(private cockroachService: CockroachService, private renderer: Renderer2) {}
 
     ngOnInit(): void {
-        //this.loadProjects();
         this.createLetters();
     }
 
@@ -53,17 +54,19 @@ export class AppComponent implements OnInit {
             h1.classList.add('expanded-letter');
             h1.textContent = letter;
 
-            this.renderer.listen(h1, 'click', () => this.handleLetterClick(letter));
+            this.renderer.listen(h1, 'click', () => {
+                this.handleLetterClick(letter).then(() => {});
+            });
 
             this.renderer.appendChild(this.expandedLetters, h1);
         }
     }
 
-    handleLetterClick(letter: string): void {
+    async handleLetterClick(letter: string): Promise<void> {
         if(!this.expanded) return;
 
         console.log(`Displaying projects for ${letter}`);
-        this.filteredProjects = this.filterByLetter(letter);
+        this.filteredProjects = await this.filterByLetter(letter);
 
         if (this.filteredProjects.length > 0 && this.projectSection) {
             this.projectSection.nativeElement.style.display = 'flex';
@@ -73,8 +76,19 @@ export class AppComponent implements OnInit {
         }
     }
 
-    filterByLetter(letter:string) {
-        return this.allProjects.filter(obj => obj.title.toLowerCase().startsWith(letter.toLowerCase()));
+    async filterByLetter(letter: string): Promise<Project[]> {
+        try {
+            const response = await fetch(`${this.functionEndpoint}?letter=${letter}`);
+            const data = await response.json();
+    
+            if (!response.ok) {
+                throw new Error(`Failed to fetch projects: ${data.error}`);
+            }
+    
+            return data.projects as Project[];
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            throw error; // Rethrow the error if needed for further handling
+        }
     }
-
 }
