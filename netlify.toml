@@ -1,6 +1,6 @@
 [build]
   command = "npm install && ng build"
-  publish = "dist/your-app-name"
+  publish = "dist/angular-test-deploy"
 
 [[redirects]]
   from = "/*"
