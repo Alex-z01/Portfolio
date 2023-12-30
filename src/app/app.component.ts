@@ -79,35 +79,11 @@ export class AppComponent implements OnInit {
                 this.projectSection.nativeElement.style.display = 'none';
             }
         }
-        /*
-        if (this.filteredProjects.length > 0 && this.projectSection) {
-            this.projectSection.nativeElement.style.display = 'flex';
-            this.projectSection.nativeElement.scrollIntoView({ behavior: 'smooth' });
-        } else if (this.filteredProjects.length == 0 && this.projectSection) {
-            this.projectSection.nativeElement.style.display = 'none';
-        }
-        */
     }
-
-    /*
-    async filterByLetter(letter: string): Promise<Project[]> {
-        try {
-            const response = await fetch(`${this.functionEndpoint}?letter=${letter}`);
-            const data = await response.json();
-    
-            if (!response.ok) {
-                throw new Error(`Failed to fetch projects: ${data.error}`);
-            }
-    
-            return data.projects as Project[];
-        } catch (error) {
-            console.error('Error fetching data:', error);
-            throw error; // Rethrow the error if needed for further handling
-        }
-    }
-    */
 
     filterByLetter(letter:string) {
-        return this.allProjects.filter(obj => obj.title.toLowerCase().startsWith(letter.toLowerCase()));
+        console.log(`All projects: ${this.allProjects}`);
+
+        return this.allProjects?.filter(obj => obj.title.toLowerCase().startsWith(letter.toLowerCase()));
     }
 }
