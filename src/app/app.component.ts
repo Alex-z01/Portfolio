@@ -82,12 +82,18 @@ export class AppComponent implements OnInit {
         }
     }
 
-    filterByLetter(letter:string) {
-        if(this.allProjects) {
-            return this.allProjects?.filter(obj => obj.title.toLowerCase().startsWith(letter.toLowerCase()));
-        } else {
-            console.warn('Projects data not available yet');
+    filterByLetter(letter: string): Project[] {
+        const filteredProjects: Project[] = [];
+      
+        if (this.allProjects) {
+          for (const project of this.allProjects) {
+            if (project.title.toLowerCase().startsWith(letter.toLowerCase())) {
+              filteredProjects.push(project);
+            }
+          }
         }
-        return [];
-    }
+      
+        return filteredProjects;
+      }
+      
 }
