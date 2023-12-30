@@ -71,7 +71,7 @@ export class AppComponent implements OnInit {
         if (this.filteredProjects.length > 0 && this.projectSection) {
             this.projectSection.nativeElement.style.display = 'flex';
             this.projectSection.nativeElement.scrollIntoView({ behavior: 'smooth' });
-        } else if (this.projectSection) {
+        } else if (this.filteredProjects.length == 0 && this.projectSection) {
             this.projectSection.nativeElement.style.display = 'none';
         }
     }
