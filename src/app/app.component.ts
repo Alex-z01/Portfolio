@@ -20,8 +20,8 @@ export class AppComponent implements OnInit {
     constructor(private cockroachService: CockroachService, private renderer: Renderer2) {}
 
     ngOnInit(): void {
-        this.loadProjects();
         this.createLetters();
+        this.loadProjects();
     }
 
     updateExpand(expanded: boolean) {
@@ -83,6 +83,11 @@ export class AppComponent implements OnInit {
     }
 
     filterByLetter(letter:string) {
-        return this.allProjects?.filter(obj => obj.title.toLowerCase().startsWith(letter.toLowerCase()));
+        if(this.allProjects) {
+            return this.allProjects?.filter(obj => obj.title.toLowerCase().startsWith(letter.toLowerCase()));
+        } else {
+            console.warn('Projects data not available yet');
+        }
+        return [];
     }
 }
