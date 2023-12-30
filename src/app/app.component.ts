@@ -68,6 +68,8 @@ export class AppComponent implements OnInit {
         console.log(`Displaying projects for ${letter}`);
         this.filteredProjects = this.filterByLetter(letter);
 
+        console.log(this.filteredProjects);
+
         if (this.filteredProjects.length > 0 && this.projectSection) {
             this.projectSection.nativeElement.style.display = 'flex';
             this.projectSection.nativeElement.scrollIntoView({ behavior: 'smooth' });
