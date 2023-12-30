@@ -1,0 +1,135 @@
+.container {
+    width: 100%;
+    height: 100vh; 
+  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero {
+    width: 100%;
+  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  
+    margin-bottom: 200px;
+  
+    font-family: 'Kalina', serif;
+    color: #0A120E;
+}
+
+.selected {
+    content: '';
+    opacity: 0;
+
+    height: 25px;
+
+    color: #0A120E;
+    font-size: 24px;
+    font-family: 'Kalina', serif;
+    font-weight: 400;
+
+    transition: all .4s linear;
+}
+
+.title-container {
+    margin: 20px 0;
+  
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  
+    line-height: 60px;
+  
+    width: 100%;
+}
+  
+.title {
+    font-size: 50px;
+    font-weight: 300;
+}
+  
+.title-special {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+  
+    user-select: none;
+
+    color:#0A120E;
+
+    cursor: pointer;
+}
+  
+.title-special h1 {
+    font-size: 200px;
+    font-weight: 600;
+  
+    margin: 0 10px;
+
+    cursor: pointer;
+}
+  
+.title-expanded {
+    display: flex;
+    width: 0;
+    font-size: 190px;
+    justify-content: flex-start;
+    overflow: hidden;
+  
+    user-select: none;
+}
+
+.expanded-letter h1:hover {
+    color: #A7C2CC;
+}
+  
+.close-button {
+    opacity: 0;
+    color: #0A120E;
+    transition: opacity 1s ease-in-out, color .3s ease-in-out;
+}
+
+.close-button:hover {
+    color: #7B202C;
+}
+
+.close-button-reveal, .close-button-hide {
+    animation: fadeIn 1s forwards, fadeOut 1s forwards;
+}
+
+.reveal {
+    animation: reveal 1s 1 forwards;
+}
+
+.hide {
+    animation: hide 1s 1 forwards;
+}
+
+@keyframes reveal {
+    to {
+        width: 830px;
+    }
+}
+
+@keyframes hide {
+    to {
+        width: 0;
+    }
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+    }
+}

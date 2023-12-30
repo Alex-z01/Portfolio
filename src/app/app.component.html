@@ -1,3 +1,5 @@
+<!-- app.component.html -->
+<app-hero (onExpand)="updateExpand($event)"></app-hero>
 
 <section #projectSection class="project-section">
   <div class='title'>
@@ -6,6 +8,7 @@
 
   <div class="projects">
     <div class="project">
+      <app-card *ngFor="let project of filteredProjects" [project]="project"></app-card>
     </div>
   </div>
 </section>

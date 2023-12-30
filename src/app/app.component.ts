@@ -1,6 +1,5 @@
 import { Component, Renderer2, ViewChild, ElementRef, OnInit } from '@angular/core';
-import { CockroachService } from './components/cockroach/cockroach-service.service';
-import { Project } from './components/cockroach/cockroach-service.service';
+import { CockroachService, Project } from './components/cockroach/cockroach-service.service';
 
 @Component({
     selector: 'app-root',

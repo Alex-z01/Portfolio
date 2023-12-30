@@ -1,0 +1,43 @@
+<!-- hero.component.html -->
+<section class="container">
+  <div class="hero">
+    <h2 class="selected" id="selected"></h2> 
+
+    <div class="title-container">
+      <h2 class="title">Alex Zaalishvili</h2>
+    </div>
+
+    <div class="title-special" id="title-special">
+      <h1 style="opacity: 0; pointer-events: none; cursor: pointer;">.</h1>
+
+      <h1 class="initial"
+        (mousedown)="expand()" 
+        (mouseover)="HoverColor($event, '#A7C2CC')"
+        (mouseleave)="HoverColor($event, '#0A120E')"
+        id="first-initial"
+      >
+        A
+      </h1> 
+
+      <div #expandedLetters
+        (mousedown)="dragStart()" 
+        (mousemove)="dragging($event)" 
+        (mouseup)="dragStop()" 
+        (wheel)="handleWheel($event)"
+        class="title-expanded" 
+        id="expanded-letters"
+      ></div>
+
+      <h1 class="initial"
+        (mousedown)="expand()" 
+        (mouseover)="HoverColor($event, '#A7C2CC')"
+        (mouseleave)="HoverColor($event, '#0A120E')"
+        id="second-initial"
+      >
+        Z
+      </h1>
+
+      <h1 class="close-button" (mousedown)="close()" id="close-button" alt="Close Button">.</h1>
+    </div>
+  </div>
+</section>
