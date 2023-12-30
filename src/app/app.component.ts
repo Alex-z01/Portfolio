@@ -94,6 +94,7 @@ export class AppComponent implements OnInit {
                 throw new Error(`Failed to fetch projects: ${data.error}`);
             }
     
+            console.log(`${letter}, ${data.projects}`);
             return data.projects as Project[];
         } catch (error) {
             console.error('Error fetching data:', error);
