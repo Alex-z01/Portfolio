@@ -20,6 +20,7 @@ export class AppComponent implements OnInit {
     constructor(private cockroachService: CockroachService, private renderer: Renderer2) {}
 
     ngOnInit(): void {
+        this.loadProjects();
         this.createLetters();
     }
 
@@ -70,12 +71,22 @@ export class AppComponent implements OnInit {
 
         console.log(this.filteredProjects);
 
+        if(this.projectSection) {
+            if(this.filteredProjects.length > 0) {
+                this.projectSection.nativeElement.style.display = 'flex';
+                this.projectSection.nativeElement.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                this.projectSection.nativeElement.style.display = 'none';
+            }
+        }
+        /*
         if (this.filteredProjects.length > 0 && this.projectSection) {
             this.projectSection.nativeElement.style.display = 'flex';
             this.projectSection.nativeElement.scrollIntoView({ behavior: 'smooth' });
         } else if (this.filteredProjects.length == 0 && this.projectSection) {
             this.projectSection.nativeElement.style.display = 'none';
         }
+        */
     }
 
     /*
