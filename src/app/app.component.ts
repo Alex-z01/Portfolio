@@ -20,8 +20,8 @@ export class AppComponent implements OnInit {
     constructor(private cockroachService: CockroachService, private renderer: Renderer2) {}
 
     ngOnInit(): void {
-        this.createLetters();
         this.loadProjects();
+        this.createLetters();
     }
 
     updateExpand(expanded: boolean) {
@@ -32,7 +32,6 @@ export class AppComponent implements OnInit {
         this.cockroachService.fetchProjects(letter).subscribe(
             (data: Project[]) => {
                 this.allProjects = data;
-                console.log(data);
             },
             (error) => {
                 console.error('Error fetching projects:', error);
@@ -47,7 +46,9 @@ export class AppComponent implements OnInit {
         for(let i = 0; i < initials.length; i++) {
             const initial = initials[i];
 
-            initial.addEventListener('click', () => this.handleLetterClick(initial.textContent!));
+            initial.addEventListener('click', () => {
+                this.handleLetterClick(initial.textContent!).then(() => {});
+            });
         }
 
         for (let charCode = 98; charCode <= 121; charCode++) {
@@ -57,18 +58,18 @@ export class AppComponent implements OnInit {
             h1.textContent = letter;
 
             this.renderer.listen(h1, 'click', () => {
-                this.handleLetterClick(letter);
+                this.handleLetterClick(letter).then(() => {});
             });
 
             this.renderer.appendChild(this.expandedLetters, h1);
         }
     }
 
-    handleLetterClick(letter: string): void {
+    async handleLetterClick(letter: string): Promise<void> {
         if(!this.expanded) return;
 
         console.log(`Displaying projects for ${letter}`);
-        this.filteredProjects = this.filterByLetter(letter);
+        this.filteredProjects = await this.filterByLetter(letter);
 
         console.log(this.filteredProjects);
 
@@ -82,18 +83,19 @@ export class AppComponent implements OnInit {
         }
     }
 
-    filterByLetter(letter: string): Project[] {
-        const filteredProjects: Project[] = [];
-      
-        if (this.allProjects) {
-          for (const project of this.allProjects) {
-            if (project.title.toLowerCase().startsWith(letter.toLowerCase())) {
-              filteredProjects.push(project);
+    async filterByLetter(letter: string): Promise<Project[]> {
+        try {
+            const response = await fetch(`${this.functionEndpoint}?letter=${letter}`);
+            const data = await response.json();
+    
+            if (!response.ok) {
+                throw new Error(`Failed to fetch projects: ${data.error}`);
             }
-          }
+    
+            return data.projects as Project[];
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            throw error; // Rethrow the error if needed for further handling
         }
-      
-        return filteredProjects;
-      }
-      
+    }
 }
