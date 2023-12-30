@@ -82,7 +82,7 @@ export class AppComponent implements OnInit {
     }
 
     filterByLetter(letter:string) {
-        console.log(`All projects: ${this.allProjects}`);
+        console.log(`All projects: ${this.allProjects.toString()}`);
 
         return this.allProjects?.filter(obj => obj.title.toLowerCase().startsWith(letter.toLowerCase()));
     }
