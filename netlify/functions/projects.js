@@ -13,21 +13,25 @@ exports.handler = async function (event, context) {
   try {
     const { letter } = event.queryStringParameters;
 
-    if (!letter || letter.length !== 1 || !/^[a-zA-Z]$/.test(letter)) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ error: 'Invalid or missing letter parameter' }),
+    let query;
+
+    if (letter && letter.length === 1 && /^[a-zA-Z]$/.test(letter)) {
+      // If a valid letter parameter is provided, filter projects by letter
+      query = {
+        text: 'SELECT * FROM projects WHERE name ILIKE $1',
+        values: [`${letter}%`],
+      };
+    } else {
+      // If no or invalid letter parameter is provided, return all projects
+      query = {
+        text: 'SELECT * FROM projects',
       };
     }
 
     const client = await pool.connect();
 
     try {
-      // Example query to fetch projects starting with the specified letter
-      const result = await client.query(
-        'SELECT * FROM projects WHERE name ILIKE $1',
-        [`${letter}%`]
-      );
+      const result = await client.query(query);
       const projects = result.rows;
 
       return {
