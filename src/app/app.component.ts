@@ -46,6 +46,8 @@ export class AppComponent implements OnInit {
         for(let i = 0; i < initials.length; i++) {
             const initial = initials[i];
 
+            console.log(initial.textContent);
+
             initial.addEventListener('click', () => {
                 this.handleLetterClick(initial.textContent!).then(() => {});
             });
