@@ -13,16 +13,16 @@ exports.handler = async function (event, context) {
   try {
     const { letter } = event.queryStringParameters;
 
+    console.log('Received letter:', letter);
+
     let query;
 
     if (letter && letter.length === 1 && /^[a-zA-Z]$/.test(letter)) {
-      // If a valid letter parameter is provided, filter projects by letter
       query = {
-        text: 'SELECT * FROM projects WHERE name ILIKE $1',
+        text: 'SELECT * FROM projects WHERE title ILIKE $1',
         values: [`${letter}%`],
       };
     } else {
-      // If no or invalid letter parameter is provided, return all projects
       query = {
         text: 'SELECT * FROM projects',
       };
@@ -43,9 +43,10 @@ exports.handler = async function (event, context) {
     }
   } catch (error) {
     console.error('Error executing database query:', error);
+
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Internal Server Error' }),
+      body: JSON.stringify({ error: error.message || 'Internal Server Error' }),
     };
   }
 };
