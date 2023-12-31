@@ -46,9 +46,7 @@ export class AppComponent implements OnInit {
         for(let i = 0; i < initials.length; i++) {
             const initial = initials[i];
 
-            console.log(initial.textContent);
-
-            initial.addEventListener('click', () => {
+            this.renderer.listen(initial, 'click', () => {
                 this.handleLetterClick(initial.textContent!).then(() => {});
             });
         }
@@ -73,7 +71,7 @@ export class AppComponent implements OnInit {
         console.log(`Displaying projects for ${letter}`);
         this.filteredProjects = await this.filterByLetter(letter);
 
-        console.log(this.filteredProjects);
+        console.log(this.filteredProjects.length);
 
         if(this.projectSection) {
             if(this.filteredProjects.length > 0) {
@@ -87,9 +85,12 @@ export class AppComponent implements OnInit {
 
     async filterByLetter(letter: string): Promise<Project[]> {
         try {
+            console.log(`${letter}, ${this.functionEndpoint}?letter=${letter}`);
             const response = await fetch(`${this.functionEndpoint}?letter=${letter}`);
             const data = await response.json();
     
+            console.log(response);
+
             if (!response.ok) {
                 throw new Error(`Failed to fetch projects: ${data.error}`);
             }
