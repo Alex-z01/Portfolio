@@ -37,7 +37,7 @@ exports.handler = async function (event, context) {
       return {
         statusCode: 200,
         headers: {
-          'Access-Control-Allow-Origin': 'http://alexzaalishvili.com', // Add your domain here
+          'Access-Control-Allow-Origin': '*', // Add your domain here
           'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE',
           'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
         },
@@ -52,7 +52,7 @@ exports.handler = async function (event, context) {
     return {
       statusCode: 500,
       headers: {
-        'Access-Control-Allow-Origin': 'http://alexzaalishvili.com', // Add your domain here
+        'Access-Control-Allow-Origin': '*', // Add your domain here
         'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE',
         'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
       },
